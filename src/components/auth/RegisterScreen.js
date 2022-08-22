@@ -10,7 +10,7 @@ export const RegisterScreen = () => {
 
         <input
           type="text"
-          placeholder="Name"
+          placeholder="name"
           name="name"
           className='auth__input'
           autocomplete='off'
@@ -34,7 +34,7 @@ export const RegisterScreen = () => {
         
         <input
           type="password"
-          placeholder="Confirm"
+          placeholder="confirm"
           name="confirm"
           className='auth__input'
           autoComplete='off'
