@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 import { firebase, googleAuthProvider } from '../firebase/firebase-config';
 import { startLoading, finishLoading } from './ui';
 import { types } from '../types/types';
@@ -13,8 +15,8 @@ export const startLoginEmailPassword = (email, password) => {
             dispatch( finishLoading() );
         })
         .catch( e => {
-            console.log(e);
             dispatch( finishLoading() );
+            Swal.fire("Error", e.message, "error");
         })
     
     }
@@ -32,7 +34,7 @@ export const startRegisterWithEmailPassword = (email, password, name) => {
             dispatch( login( user.uid,user.displayName ));
         })
         .catch( e => {
-            console.log(e);
+            Swal.fire("Error", e.message, "error");
         });
 
     }
