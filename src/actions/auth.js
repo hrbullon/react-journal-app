@@ -50,6 +50,8 @@ export const startGoogleLogin = () => {
     }
 }
 
+
+
 export const login = (uid, displayName) => {
     return {
         type: types.login,
@@ -59,3 +61,19 @@ export const login = (uid, displayName) => {
         }
     }
 }
+
+export const startLogout = () => {
+    return (dispatch) => {
+        firebase.auth().signOut()
+        .then( () => {
+            dispatch( logout() );
+        })
+    }
+}
+
+export const logout = () => {
+    return {
+        type: types.logout
+    }
+}
+
