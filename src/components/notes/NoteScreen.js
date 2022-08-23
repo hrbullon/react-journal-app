@@ -1,7 +1,26 @@
-import React from 'react'
-import { NotesAppBar } from './NotesAppBar'
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from "react-redux";
+
+import { NotesAppBar } from './NotesAppBar';
+import { useForm } from "../../hooks/useForm";
 
 export const NoteScreen = () => {
+
+  const { active: note } = useSelector( state => state.notes );
+  const [ formValues, handleInputChange, reset ] = useForm( note );
+  const { body, title, url } = formValues;
+
+  const activeId = useRef( note.id );
+
+  useEffect(() => {
+      
+      if( note.id !== activeId.current ){
+        reset(note);
+        activeId.current = note.id;
+      }
+
+  }, [ note, reset ])
+
   return (
     <div className='notes__main-content'>
 
@@ -11,21 +30,33 @@ export const NoteScreen = () => {
 
           <input 
             type="text"
+            name="title"
             placeholder="Some awesone title"
             className="notes__title-input"  
+            value={ title }
+            onChange={ handleInputChange }
           />
 
           <textarea 
+            name="body"
             placeholder='What happenend today'
             className='notes__textarea'
-          />
+            value={ body }
+            onChange={ handleInputChange }
+          >
+          </textarea>
 
-          <div className='notes__image'>
-            <img 
-              src="https://th.bing.com/th/id/OIP.7hf8IOtnSKYT0GKTGji3ZwHaEK?pid=ImgDet&rs=1"
-              alt="imagen"
-            />
-          </div>
+          {
+            (note.url) &&
+              (
+                <div className='notes__image'>
+                  <img 
+                    src={ note.url }
+                    alt="imagen"
+                  />
+                </div>
+              )
+          }
 
         </div>
     
