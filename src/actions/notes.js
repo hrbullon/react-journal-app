@@ -107,3 +107,28 @@ export const startUploading = ( file ) => {
 
     }
 }
+
+export const startDeletingNote = ( ) => {
+    return async ( dispatch, getState ) => {
+
+        const { uid } = getState().auth;
+        const { active: note } = getState().notes;
+
+        await db.doc(`${ uid }/journal/notes/${ note.id }`).delete()
+        .then( () =>{
+
+            Swal.fire("Saved", note.title, "success");
+            
+            dispatch( deleteNote(note.id) );
+        
+        }).catch( () => {
+            console.log("Hubo un error, intente mas tarde!");
+        });
+
+    }
+}
+
+export const deleteNote = ( id ) => ({
+    type: types.notesDelete,
+    payload: id
+})
